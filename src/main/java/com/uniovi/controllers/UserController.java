@@ -46,6 +46,13 @@ public class UserController {
 		return "redirect:home";
 	}
 	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model) {
+		return "login";
+	}
+	
+	
+	
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
 		//TODO añadir aquí la lista de todos los usuarios del sistema (ISSUE #3)

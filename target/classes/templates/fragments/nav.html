@@ -16,12 +16,24 @@
 				<li><a href="/mark/filter">Filtrar</a></li> -->
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/signup"> <span
-						class="glyphicon glyphicon-user"></span> Registrate
-				</a></li>
-				<li><a href="/login"> <span
-						class="glyphicon glyphicon-log-in"></span> Identifícate
-				</a></li>
+				<li sec:authorize="!isAuthenticated()">
+                     <a href="/signup" th:text="#{signup.message}">
+                         <span class="glyphicon glyphicon-user"></span>
+                         Regístrate
+                     </a>
+                 </li>
+                 <li sec:authorize="!isAuthenticated()">
+                     <a href="/login" th:text="#{login.message}">
+                         <span class="glyphicon glyphicon-log-in"></span>
+                         Identifícate
+                     </a>
+                 </li>
+                 <li sec:authorize="isAuthenticated()">
+                     <a href="/logout" >
+                         <span class="glyphicon glyphicon-log-out"></span>
+                         Desconectar
+                     </a>
+                 </li>
 			</ul>
 		</div>
 	</div>
