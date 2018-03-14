@@ -27,6 +27,12 @@ public class UsersService {
 		return users;
 	}
 
+	public Page<User> searchMarksByDescriptionAndNameForUser(Pageable pageable, String searchText) {
+		searchText = "%"+searchText+"%"; 
+		Page<User> users = usersRepository.searchByEmailAndName(pageable,searchText);
+		return users;
+	}
+
 	public User getUser(Long id) {
 		return usersRepository.findOne(id);
 	}
