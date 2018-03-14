@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.SecurityService;
@@ -51,15 +53,16 @@ public class UserController {
 		return "login";
 	}
 	
-	
+	@RequestMapping("/user/list" )
+	public String getListado(Model model, Pageable pageable){
+		Page<User> users = usersService.getUsers(pageable); 
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "user/list";
+	}
 	
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
-		//TODO añadir aquí la lista de todos los usuarios del sistema (ISSUE #3)
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		String dni = auth.getName();
-//		User activeUser = usersService.getUserByDni(dni);
-//		model.addAttribute("markList", activeUser.getMarks());
-		return "home";
+	    return "home";
 	}
 }

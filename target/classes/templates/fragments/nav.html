@@ -10,30 +10,29 @@
 			<!-- <img src="/img/student-48.png" alt="logo" /> -->
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav">
-				<!--  <li class="active"><a href="/mark/list">Ver Notas</a></li>
-				<li><a href="/mark/add">Agregar Nota</a></li>
-				<li><a href="/mark/filter">Filtrar</a></li> -->
+			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+				<li><a href="/">Home</a></li>
+				<li id="users-menu" class="dropdown"
+					sec:authorize="hasRole('ROLE_USUARIO')"><a
+					class="dropdown-toggle" data-toggle="dropdown" href="#">
+						Gestión de Usuarios <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/user/list">Ver Usuarios</a></li>
+					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li sec:authorize="!isAuthenticated()">
-                     <a href="/signup" th:text="#{signup.message}">
-                         <span class="glyphicon glyphicon-user"></span>
-                         Regístrate
-                     </a>
-                 </li>
-                 <li sec:authorize="!isAuthenticated()">
-                     <a href="/login" th:text="#{login.message}">
-                         <span class="glyphicon glyphicon-log-in"></span>
-                         Identifícate
-                     </a>
-                 </li>
-                 <li sec:authorize="isAuthenticated()">
-                     <a href="/logout" >
-                         <span class="glyphicon glyphicon-log-out"></span>
-                         Desconectar
-                     </a>
-                 </li>
+				<li sec:authorize="!isAuthenticated()"><a href="/signup"
+					th:text="#{signup.message}"> <span
+						class="glyphicon glyphicon-user"></span> Regístrate
+				</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/login"
+					th:text="#{login.message}"> <span
+						class="glyphicon glyphicon-log-in"></span> Identifícate
+				</a></li>
+				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
+						class="glyphicon glyphicon-log-out"></span> Desconectar
+				</a></li>
 			</ul>
 		</div>
 	</div>
