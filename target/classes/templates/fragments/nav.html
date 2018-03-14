@@ -20,6 +20,14 @@
 					<ul class="dropdown-menu">
 						<li><a href="/user/list">Ver Usuarios</a></li>
 					</ul></li>
+				<li id="users-menu" class="dropdown"
+					sec:authorize="hasRole('ROLE_USUARIO')"><a
+					class="dropdown-toggle" data-toggle="dropdown" href="#">
+						Solicitudes de amistad <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/friendRequest/list">Ver solicitudes</a></li>
+					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"

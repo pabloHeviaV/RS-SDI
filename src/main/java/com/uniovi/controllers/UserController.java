@@ -34,7 +34,7 @@ public class UserController {
 	private SecurityService securityService;
 
 	@Autowired
-	private FriendRequestService frService;
+	private FriendRequestService friendRequestService;
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
@@ -87,7 +87,7 @@ public class UserController {
 		User sender = usersService.getCurrentUser();
 		User reciever = usersService.getUser(id);
 
-		frService.sendFriendshipRequest(sender, reciever);
+		friendRequestService.sendFriendshipRequest(sender, reciever);
 		return "redirect:/user/list/update";
 	}
 
