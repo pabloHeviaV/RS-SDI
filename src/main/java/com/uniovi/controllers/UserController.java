@@ -62,7 +62,7 @@ public class UserController {
 			@RequestParam(value = "", required=false) String searchText){
 		Page<User> users = new PageImpl<User>(new LinkedList<User>()); 
 		if (searchText != null && !searchText.isEmpty()) {
-			users  = usersService.searchMarksByDescriptionAndNameForUser(pageable, searchText);
+			users  = usersService.searchUsersByEmailAndName(pageable, searchText);
 		}else {
 			users = usersService.getUsers(pageable); 
 		}
