@@ -76,7 +76,6 @@ public class UserController {
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
-		System.err.println("update");
 		return "user/list :: tableUsers";
 	}
 	
