@@ -49,7 +49,7 @@ public class UserController {
 		}
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
-		return "redirect:home";
+		return "redirect:user/list";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
