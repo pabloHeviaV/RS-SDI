@@ -18,7 +18,7 @@
 		<p>Los usuarios que actualmente figuran en el sistema son los
 			siguientes:</p>
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table table-hover" th:fragment="tableUsers" id="tableUsers">
 				<thead>
 					<tr>
 						<th>Nombre</th>
@@ -33,6 +33,25 @@
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.email}">Email del usuario</td>
+						<td>
+							<div th:if="${!activeUser.checkFriendship(user)}">
+								<button type="button" th:id="${'fRButton' + user.id}" 
+		   					class="btn btn-info">
+		   							Agregar Amigo
+		   						</button>
+		   						<script th:inline="javascript">
+								  /*<![CDATA[*/
+								  
+								  $( "#fRButton[[${user.id}]]" ).click(function() {
+									 //var model=[];
+									 // model.activeUser="${activeUser.sendFriendshipRequest(user)}";
+									 // model.activeUser.sendFriendshipRequest(model.user);
+									  $("tableUsers").load("/user/list/update");
+								  });
+								  /*]]>*/
+								</script>  
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
