@@ -10,36 +10,47 @@ public class FriendRequest {
 	@Id
 	@GeneratedValue
 	private long id;
+	
 	@ManyToOne
-	private User from;
+	private User sender;
+	
+	@ManyToOne
+	private User reciever;
 
 	FriendRequest() {
 
 	}
 
-	public FriendRequest(User from) {
+	public FriendRequest(User sender, User reciever) {
 		super();
-		this.from = from;
-		System.err.println(this.toString());
+		this.sender = sender;
+		this.reciever = reciever;
 	}
 
 	public long getId() {
 		return id;
 	}
 
-	public User getFrom() {
-		return from;
+
+	public User getSender() {
+		return sender;
 	}
 
-	public void setFrom(User from) {
-		this.from = from;
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
+
+	public User getReciever() {
+		return reciever;
+	}
+
+	public void setReciever(User reciever) {
+		this.reciever = reciever;
 	}
 
 	@Override
 	public String toString() {
-		return "FriendRequest [ from=" + from + "]";
-	}
-	
-	
+		return "FriendRequest [sender=" + sender + ", reciever=" + reciever + "]";
+	}	
 
 }

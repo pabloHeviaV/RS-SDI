@@ -9,19 +9,17 @@ import com.uniovi.repositories.FriendRequestRepository;
 
 @Service
 public class FriendRequestService {
-	
+
 	@Autowired
 	private FriendRequestRepository frRepository;
-	
+
 	public void deleteFriendRequest(Long id) {
 		frRepository.delete(id);
 	}
-	
-	public void sendFriendshipRequest(User userFrom, User userTo) {
-		FriendRequest fr = new FriendRequest(userFrom);
+
+	public void sendFriendshipRequest(User sender, User reciever) {
+		FriendRequest fr = new FriendRequest(sender, reciever);
 		frRepository.save(fr);
-		userFrom.sendFriendshipRequest(userTo, fr);
-		
-		System.err.println("userservice.sendFriendshipRequest");
+		sender.sendFriendshipRequest(sender, reciever, fr);
 	}
 }

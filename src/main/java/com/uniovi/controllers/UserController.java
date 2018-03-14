@@ -26,16 +26,16 @@ public class UserController {
 
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
-	
+
 	@Autowired
 	private UsersService usersService;
-	
+
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@Autowired
 	private FriendRequestService frService;
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
@@ -52,51 +52,48 @@ public class UserController {
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:user/list";
 	}
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
 	}
-	
-	@RequestMapping("/user/list" )
+
+	@RequestMapping("/user/list")
 	public String getList(Model model, Pageable pageable,
-			@RequestParam(value = "", required=false) String searchText){
-		Page<User> users = new PageImpl<User>(new LinkedList<User>()); 
+			@RequestParam(value = "", required = false) String searchText) {
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		if (searchText != null && !searchText.isEmpty()) {
-			users  = usersService.searchUsersByEmailAndName(pageable, searchText);
-		}else {
-			users = usersService.getUsers(pageable); 
+			users = usersService.searchUsersByEmailAndName(pageable, searchText);
+		} else {
+			users = usersService.getUsers(pageable);
 		}
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
 		return "user/list";
 	}
-	
+
 	@RequestMapping("/user/list/update")
-	public String updateList(Model model, Pageable pageable){
+	public String updateList(Model model, Pageable pageable) {
 		Page<User> users = usersService.getUsers(pageable);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
 		return "user/list :: tableUsers";
 	}
-	
+
 	@RequestMapping("user/sendFR/{id}")
 	public String sendFriendshipRequest(Model model, @PathVariable Long id) {
-		User userTo = usersService.getUser(id);
-		User userFrom = usersService.getCurrentUser();
-		
-		frService.sendFriendshipRequest(userFrom, userTo);
-		return "redirect:user/list/update";
+		User sender = usersService.getCurrentUser();
+		User reciever = usersService.getUser(id);
+
+		frService.sendFriendshipRequest(sender, reciever);
+		return "redirect:/user/list/update";
 	}
-	
+
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
-	    return "home";
+		return "home";
 	}
-	
-	
-	
-	
+
 }

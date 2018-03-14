@@ -26,9 +26,12 @@ public class User {
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 
-	@OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
-	private Set<FriendRequest> friendRequests = new HashSet<FriendRequest>();
-	
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<FriendRequest> friendRequestsSenders = new HashSet<FriendRequest>();
+
+	@OneToMany(mappedBy = "reciever", cascade = CascadeType.ALL)
+	private Set<FriendRequest> friendRequestsRecievers = new HashSet<FriendRequest>();
+
 	@Transient
 	private Set<User> friends = new HashSet<User>();
 
@@ -115,15 +118,22 @@ public class User {
 		return true;
 	}
 
-	public Set<FriendRequest> getFriendRequests() {
-		return friendRequests;
+	public Set<FriendRequest> getFriendRequestsSenders() {
+		return friendRequestsSenders;
 	}
 
-	public void setFriendRequests(Set<FriendRequest> friendRequests) {
-		this.friendRequests = friendRequests;
+	public void setFriendRequestsSenders(Set<FriendRequest> friendRequestsSenders) {
+		this.friendRequestsSenders = friendRequestsSenders;
 	}
-	
-	
+
+	public Set<FriendRequest> getFriendRequestsRecievers() {
+		return friendRequestsRecievers;
+	}
+
+	public void setFriendRequestsRecievers(Set<FriendRequest> friendRequestsRecievers) {
+		this.friendRequestsRecievers = friendRequestsRecievers;
+	}
+
 	public Set<User> getFriends() {
 		return friends;
 	}
@@ -150,16 +160,16 @@ public class User {
 	 * 
 	 * @param user
 	 */
-	public void sendFriendshipRequest(User userTo, FriendRequest fr) {
-		userTo.getFriendRequests().add(fr);
-		System.err.println("user.sendFriendshipRequest");
+	public void sendFriendshipRequest(User sender, User reciever, FriendRequest fr) {
+		sender.getFriendRequestsSenders().add(fr);
+		reciever.getFriendRequestsRecievers().add(fr);
 	}
 
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", name=" + name + ", lastName=" + lastName + ", friendRequests="
-				+ friendRequests + ", friends=" + friends + "]";
+		return "User [email=" + email + ", name=" + name + ", lastName=" + lastName + ", friendRequestsSenders="
+				+ friendRequestsSenders + ", friendRequestsRecievers=" + friendRequestsRecievers + ", friends="
+				+ friends + "]";
 	}
-	
-	
+
 }
