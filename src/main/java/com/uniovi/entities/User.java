@@ -150,7 +150,16 @@ public class User {
 	 * 
 	 * @param user
 	 */
-	public void sendFriendshipRequest(User user) {
-		user.getFriendRequests().add(new FriendRequest(this));
+	public void sendFriendshipRequest(User userTo, FriendRequest fr) {
+		userTo.getFriendRequests().add(fr);
+		System.err.println("user.sendFriendshipRequest");
 	}
+
+	@Override
+	public String toString() {
+		return "User [email=" + email + ", name=" + name + ", lastName=" + lastName + ", friendRequests="
+				+ friendRequests + ", friends=" + friends + "]";
+	}
+	
+	
 }

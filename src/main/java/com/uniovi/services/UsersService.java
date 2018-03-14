@@ -62,4 +62,6 @@ public class UsersService {
 		User activeUser = getUserByEmail(email);
 		return activeUser;
 	}
+	
+	
 }

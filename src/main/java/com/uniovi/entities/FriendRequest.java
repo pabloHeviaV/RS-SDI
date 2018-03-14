@@ -20,6 +20,7 @@ public class FriendRequest {
 	public FriendRequest(User from) {
 		super();
 		this.from = from;
+		System.err.println(this.toString());
 	}
 
 	public long getId() {

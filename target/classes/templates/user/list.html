@@ -42,10 +42,7 @@
 								  /*<![CDATA[*/
 								  
 								  $( "#fRButton[[${user.id}]]" ).click(function() {
-									  var activeUser = [${activeUser}];
-	                                  var user = [${user}];
-	                                  activeUser.sendFriendshipRequest(user);
-	                                  $("#tableUsers").load("/user/list/update");
+	                                  $("#tableUsers").load("/user/sendFR/[[${user.id}]]");
 								  });
 								  /*]]>*/
 								</script>

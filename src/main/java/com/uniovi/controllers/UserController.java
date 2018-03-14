@@ -10,11 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.FriendRequestService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
@@ -31,7 +33,8 @@ public class UserController {
 	@Autowired
 	private SecurityService securityService;
 	
-	
+	@Autowired
+	private FriendRequestService frService;
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
@@ -77,6 +80,15 @@ public class UserController {
 		model.addAttribute("activeUser", usersService.getCurrentUser());
 		model.addAttribute("page", users);
 		return "user/list :: tableUsers";
+	}
+	
+	@RequestMapping("user/sendFR/{id}")
+	public String sendFriendshipRequest(Model model, @PathVariable Long id) {
+		User userTo = usersService.getUser(id);
+		User userFrom = usersService.getCurrentUser();
+		
+		frService.sendFriendshipRequest(userFrom, userTo);
+		return "redirect:user/list/update";
 	}
 	
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
