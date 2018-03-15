@@ -103,14 +103,6 @@ public class UserController {
 		return "user/listFriends";
 	}
 	
-//	@RequestMapping("/user/listFriends")
-//	public String getList(Model model){
-//		User user = usersService.getCurrentUser();
-//		Set<User> userFriends = usersService.getFriendsForUser(user.getId());
-//		model.addAttribute("usersListFriend", userFriends);
-//		return "user/listFriends";
-//	}
-	
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
