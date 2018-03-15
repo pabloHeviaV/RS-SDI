@@ -12,6 +12,9 @@ public class InsertSampleDataService {
 	@Autowired
 	private UsersService usersService;
 
+	@Autowired
+	private FriendRequestService frService;
+	
 	@PostConstruct
 	public void init() {
 		User user1 = new User("1@uniovi.es", "Pedro", "Díaz");
@@ -33,5 +36,9 @@ public class InsertSampleDataService {
 		usersService.addUser(user4);
 		usersService.addUser(user5);
 		usersService.addUser(user6);
+		
+		frService.sendFriendshipRequest(user2, user1);
+		frService.sendFriendshipRequest(user3, user1);
+		frService.sendFriendshipRequest(user4, user1);
 	}
 }

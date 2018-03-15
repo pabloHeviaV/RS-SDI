@@ -13,16 +13,14 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Nombre</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
+						<th class="col-md-1">Nombre</th>
+						<th class="col-md-1">Email</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="friendRequest : ${friendRequestList}">
-						<td th:text="${friendRequest.reciever.getName()}">Nombre del usuario que envió la solicitud</td>
+						<td th:text="${friendRequest.sender.getName()}">Nombre del usuario que envió la solicitud</td>
+						<td th:text="${friendRequest.sender.getEmail()}">Email del usuario que envió la solicitud</td>
 					</tr>
 				</tbody>
 			</table>

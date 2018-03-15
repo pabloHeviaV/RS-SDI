@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: RS
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Usuario
+Built-By: UO251259
 Implementation-Vendor-Id: com.uniovi
 Build-Jdk: 1.8.0_161
 Implementation-URL: http://projects.spring.io/spring-boot/RS/

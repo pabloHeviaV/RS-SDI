@@ -24,10 +24,10 @@ public class FriendRequestController {
 	private UsersService usersService;
 	
 	@RequestMapping("/friendRequest/list")
-	public String getList(Model model, Pageable pageable, Principal principal){
+	public String getList(Model model, Pageable pageable){
 		
-		String email = principal.getName(); 
-		User user = usersService.getUserByEmail(email);
+		
+		User user = usersService.getCurrentUser();
 		Page<FriendRequest> friendRequests = friendRequestService.getFriendRequestsForUser(pageable, user);
 		
 		model.addAttribute("friendRequestList", friendRequests.getContent());
