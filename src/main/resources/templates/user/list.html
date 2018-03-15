@@ -32,9 +32,11 @@
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.email}">Email del usuario</td>
 						<td>
+							<!-- Sólo muestra el botón cuando no son amigos -->
 							<div th:if="${!activeUser.checkFriendship(user)}">
 								<button type="button" th:id="${'fRButton' + user.id}"
-									class="btn btn-info">Agregar Amigo</button>
+									class="btn btn-info">
+									<span th:if="${activeUser.existsRequest(user)}" th:text= "Solicitud Enviada" >Agregar Amigo</span></button>
 								<script th:inline="javascript">
 								  /*<![CDATA[*/
 								  
@@ -44,6 +46,13 @@
 								  /*]]>*/
 								</script>
 							</div>
+							
+							<!-- <div th:unless="${!activeUser.checkFriendship(user)}">
+							<div  th:if="${activeUser.existsRequest(user)}">
+								<button type="button" th:id="${'fRButton' + user.id}"
+									class="btn btn-info" disabled="true">Solicitud Enviada</button>
+							</div> 
+							</div>-->
 						</td>
 					</tr>
 				</tbody>
