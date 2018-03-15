@@ -10,17 +10,31 @@
 		<h2>Solicitudes de amistad</h2>
 		<p>Las solicitudes de amistad que tienes son las siguientes:</p>
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table table-hover" th:fragment="tableFriendRequest"
+				id="tableFriendRequest">
 				<thead>
 					<tr>
 						<th class="col-md-1">Nombre</th>
 						<th class="col-md-1">Email</th>
+						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="friendRequest : ${friendRequestList}">
 						<td th:text="${friendRequest.sender.getName()}">Nombre del usuario que envió la solicitud</td>
 						<td th:text="${friendRequest.sender.getEmail()}">Email del usuario que envió la solicitud</td>
+						<td>
+							<button type="button" th:id="${'fRButton' + friendRequest.id}"
+								class="btn btn-info">Aceptar</button>
+							<script th:inline="javascript">
+								 /*<![CDATA[*/
+								  
+								 $( "#fRButton[[${friendRequest.id}]]" ).click(function() {
+	                                 $("#tableFriendRequest").load("/user/acceptFR/[[${friendRequest.id}]]/[[${friendRequest.sender.getId()}]]");
+								 });
+								 /*]]>*/
+							</script>
+						</td>
 					</tr>
 				</tbody>
 			</table>

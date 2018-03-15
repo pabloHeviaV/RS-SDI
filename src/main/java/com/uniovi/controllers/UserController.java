@@ -1,6 +1,7 @@
 package com.uniovi.controllers;
 
 import java.util.LinkedList;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.uniovi.entities.FriendRequest;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendRequestService;
 import com.uniovi.services.SecurityService;
@@ -83,13 +85,32 @@ public class UserController {
 	}
 
 	@RequestMapping("user/sendFR/{id}")
-	public String sendFriendshipRequest(Model model, @PathVariable Long id) {
+	public String sendFriendRequest(Model model, @PathVariable Long id) {
 		User sender = usersService.getCurrentUser();
 		User reciever = usersService.getUser(id);
 
 		friendRequestService.sendFriendshipRequest(sender, reciever);
 		return "redirect:/user/list/update";
 	}
+	
+	
+	@RequestMapping("/user/listFriends")
+	public String getList(Model model, Pageable pageable){
+		User user = usersService.getCurrentUser();
+		Page<User> userFriends = usersService.getFriendsForUser(pageable, user.getId());
+		model.addAttribute("usersListFriend", userFriends.getContent());
+		model.addAttribute("page", userFriends);
+		return "user/listFriends";
+	}
+	
+//	@RequestMapping("/user/listFriends")
+//	public String getList(Model model){
+//		User user = usersService.getCurrentUser();
+//		Set<User> userFriends = usersService.getFriendsForUser(user.getId());
+//		model.addAttribute("usersListFriend", userFriends);
+//		return "user/listFriends";
+//	}
+	
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {

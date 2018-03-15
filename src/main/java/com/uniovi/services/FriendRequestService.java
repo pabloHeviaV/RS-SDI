@@ -15,14 +15,16 @@ public class FriendRequestService {
 	@Autowired
 	private FriendRequestRepository friendRequestRepository;
 
-	public void deleteFriendRequest(Long id) {
+	public void deleteFriendRequest(User sender,User reciever, Long id) {
+		FriendRequest fr = friendRequestRepository.findOne(id);
+		sender.removeFriendRequest(sender, reciever, fr);
 		friendRequestRepository.delete(id);
 	}
 
 	public void sendFriendshipRequest(User sender, User reciever) {
 		FriendRequest fr = new FriendRequest(sender, reciever);
 		friendRequestRepository.save(fr);
-		sender.sendFriendshipRequest(sender, reciever, fr);
+		sender.sendFriendRequest(sender, reciever, fr);
 	}
 
 	public Page<FriendRequest> getFriendRequestsForUser(Pageable pageable, User user) {

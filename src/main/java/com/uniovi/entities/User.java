@@ -8,8 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -32,7 +35,9 @@ public class User {
 	@OneToMany(mappedBy = "reciever", cascade = CascadeType.ALL)
 	private Set<FriendRequest> friendRequestsRecievers = new HashSet<FriendRequest>();
 
-	@Transient
+	@ManyToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "friendship", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), 
+				inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
 	private Set<User> friends = new HashSet<User>();
 
 	public User(String email, String name, String lastName) {
@@ -155,28 +160,44 @@ public class User {
 	}
 
 	/**
-	 * Añade una petición de amistad de el usuario activo a la lista de peticiones
-	 * del user pasado por parámetro.
+	 * Añade una peticion de amistad a la lista de peticiones enviadas del
+	 * usuario que la envia y a la lista de peticiones recibidas del usuario que recibe la peticion.
 	 * 
-	 * @param user
+	 * @param sender
+	 * @param reciever
+	 * @param fr
 	 */
-	public void sendFriendshipRequest(User sender, User reciever, FriendRequest fr) {
+	public void sendFriendRequest(User sender, User reciever, FriendRequest fr) {
 		sender.getFriendRequestsSenders().add(fr);
 		reciever.getFriendRequestsRecievers().add(fr);
 	}
-
+	
 	/**
-	 * Comprueba si el usuario activo le ha enviado una petición de amistad al
-	 * usuario pasado por parámetro.
+	 * Elimina una peticion de amistad de la lista de peticiones enviadas del 
+	 * usuario que la envia y de la lista de peticiones recibidas del usuario que la recibe.
 	 * 
+	 * @param sender
 	 * @param reciever
-	 * @return
+	 * @param fr
 	 */
-	public boolean existsRequest(User reciever) {
-		for(FriendRequest fr: getFriendRequestsSenders())
-			if(fr.getReciever().equals(reciever))
-				return true;
-		return false;
+	public void removeFriendRequest(User sender, User reciever,FriendRequest fr) {
+		sender.getFriendRequestsSenders().remove(fr);
+		reciever.getFriendRequestsRecievers().remove(fr);
+		fr.setSender(null);
+		fr.setReciever(null);
+	}
+	
+	/**
+	 * Creamos una relación de amistad entre el usuario que envió
+	 * la solicitud de amistad y el que la recibió añadiendoles a sus respectivas
+	 * listas de amigos.
+	 * 
+	 * @param sender
+	 * @param reciever
+	 */
+	public void acceptFriendRequest(User sender, User reciever) {
+		sender.getFriends().add(reciever);
+		reciever.getFriends().add(sender);
 	}
 
 	@Override
