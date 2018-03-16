@@ -206,5 +206,19 @@ public class User {
 				+ friendRequestsSenders + ", friendRequestsRecievers=" + friendRequestsRecievers + ", friends="
 				+ friends + "]";
 	}
+	
+	/**
+	 * Comprueba si el usuario activo le ha enviado una petición de amistad al
+	 * usuario pasado por parámetro.
+	 * 
+	 * @param reciever
+	 * @return
+	 */
+	public boolean existsRequest(User reciever) {
+		for(FriendRequest fr: getFriendRequestsSenders())
+			if(fr.getReciever().equals(reciever))
+				return true;
+		return false;
+}
 
 }

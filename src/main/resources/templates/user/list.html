@@ -34,10 +34,12 @@
 						<td>
 							<div th:if="${!activeUser.checkFriendship(user)}">
 								<button type="button" th:id="${'fRButton' + user.id}"
-									class="btn btn-info">Agregar Amigo</button>
+									class="btn btn-info">
+									<span th:id="${'buttonText' + user.id}" th:if="${activeUser.existsRequest(user)}" th:text="#{fr.alreadySent}" th:disabled="true"></span>
+									<span th:id="${'buttonText' + user.id}" th:unless="${activeUser.existsRequest(user)}" th:text="#{fr.addFriend}" th:disabled="true"></span>
+								</button>
 								<script th:inline="javascript">
 								  /*<![CDATA[*/
-								  
 								  $( "#fRButton[[${user.id}]]" ).click(function() {
 	                                  $("#tableUsers").load("/user/sendFR/[[${user.id}]]");
 								  });
