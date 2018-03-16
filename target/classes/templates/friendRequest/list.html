@@ -7,25 +7,25 @@
 	<nav th:replace="fragments/nav" />
 
 	<div class="container">
-		<h2>Solicitudes de amistad</h2>
-		<p>Las solicitudes de amistad que tienes son las siguientes:</p>
+		<h2 th:text="#{nav.fr.list}"></h2>
+		<p th:text="#{list.fr.description}"></p>
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableFriendRequest"
 				id="tableFriendRequest">
 				<thead>
 					<tr>
-						<th class="col-md-1">Nombre</th>
+						<th class="col-md-1" th:text="#{list.name}"></th>
 						<th class="col-md-1">Email</th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="friendRequest : ${friendRequestList}">
-						<td th:text="${friendRequest.sender.getName()}">Nombre del usuario que envió la solicitud</td>
-						<td th:text="${friendRequest.sender.getEmail()}">Email del usuario que envió la solicitud</td>
+						<td th:text="${friendRequest.sender.getName()}"></td>
+						<td th:text="${friendRequest.sender.getEmail()}"></td>
 						<td>
 							<button type="button" th:id="${'fRButton' + friendRequest.id}"
-								class="btn btn-info">Aceptar</button>
+								class="btn btn-info" th:text="#{accept.message}"></button>
 							<script th:inline="javascript">
 								 /*<![CDATA[*/
 								  

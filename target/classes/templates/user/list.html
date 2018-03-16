@@ -7,30 +7,29 @@
 	<nav th:replace="fragments/nav" />
 
 	<div class="container">
-		<h2>Usuarios</h2>
+		<h2 th:text="#{users.message}"></h2>
 		<form class="navbar-form" action="/user/list">
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
-					placeholder="Buscar por email o nombre del usuario">
+					th:placeholder="#{search.placeholder}">
 			</div>
-			<button type="submit" class="btn btn-default">Buscar</button>
+			<button type="submit" class="btn btn-default" th:text="#{search.message}"></button>
 		</form>
-		<p>Los usuarios que actualmente figuran en el sistema son los
-			siguientes:</p>
+		<p th:text="#{list.users.description}"></p>
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableUsers"
 				id="tableUsers">
 				<thead>
 					<tr>
-						<th class="col-md-1">Nombre</th>
+						<th class="col-md-1" th:text="#{list.name}"></th>
 						<th class="col-md-1">Email</th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
-						<td th:text="${user.name}">Nombre del usuario</td>
-						<td th:text="${user.email}">Email del usuario</td>
+						<td th:text="${user.name}"></td>
+						<td th:text="${user.email}"></td>
 						<td>
 							<div th:if="${!activeUser.checkFriendship(user)}">
 								<button type="button" th:id="${'fRButton' + user.id}"
