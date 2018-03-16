@@ -61,11 +61,6 @@ public class UsersService {
 		return friends;
 	}
 	
-//	public Set<User> getFriendsForUser(Long reciever_id) {
-//		User user = usersRepository.findOne(reciever_id);
-//		return user.getFriends();
-//	}
-	
 	/**
 	 * Devuelve el usuario con sesión iniciada en el sistema.
 	 * @return

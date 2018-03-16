@@ -26,7 +26,7 @@ public class User {
 	private String role;
 
 	private String password;
-	@Transient // propiedad que no se almacena e la tabla.
+	@Transient
 	private String passwordConfirm;
 
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
@@ -35,7 +35,7 @@ public class User {
 	@OneToMany(mappedBy = "reciever", cascade = CascadeType.ALL)
 	private Set<FriendRequest> friendRequestsRecievers = new HashSet<FriendRequest>();
 
-	@ManyToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade= CascadeType.ALL)
 	@JoinTable(name = "friendship", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), 
 				inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
 	private Set<User> friends = new HashSet<User>();
