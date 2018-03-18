@@ -18,9 +18,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user : ${usersListFriend}">
-						<td th:text="${user.name}">Nombre del usuario</td>
-						<td th:text="${user.email}">Email del usuario</td>
+					<tr th:each="friendship : ${friendshipList}">
+						<td th:text="${friendship.sender.getName()}">Nombre del usuario</td>
+						<td th:text="${friendship.sender.getEmail()}">Email del usuario</td>
 					</tr>
 				</tbody>
 			</table>

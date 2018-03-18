@@ -6,7 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class FriendRequest {
+public class Friendship {
+
 	@Id
 	@GeneratedValue
 	private long id;
@@ -17,11 +18,11 @@ public class FriendRequest {
 	@ManyToOne
 	private User reciever;
 
-	FriendRequest() {
+	Friendship() {
 
 	}
 
-	public FriendRequest(User sender, User reciever) {
+	public Friendship(User sender, User reciever) {
 		super();
 		this.sender = sender;
 		this.reciever = reciever;
@@ -49,7 +50,7 @@ public class FriendRequest {
 
 	@Override
 	public String toString() {
-		return "FriendRequest [sender=" + sender + ", reciever=" + reciever + "]";
+		return "Friendship [sender=" + sender + ", reciever=" + reciever + "]";
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class FriendRequest {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FriendRequest other = (FriendRequest) obj;
+		Friendship other = (Friendship) obj;
 		if (reciever == null) {
 			if (other.reciever != null)
 				return false;
@@ -82,5 +83,5 @@ public class FriendRequest {
 			return false;
 		return true;
 	}
-
+	
 }

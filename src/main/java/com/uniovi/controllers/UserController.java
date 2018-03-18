@@ -93,16 +93,6 @@ public class UserController {
 		return "redirect:/user/list/update";
 	}
 	
-	
-	@RequestMapping("/user/listFriends")
-	public String getList(Model model, Pageable pageable){
-		User user = usersService.getCurrentUser();
-		Page<User> userFriends = usersService.getFriendsForUser(pageable, user.getId());
-		model.addAttribute("usersListFriend", userFriends.getContent());
-		model.addAttribute("page", userFriends);
-		return "user/listFriends";
-	}
-	
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
