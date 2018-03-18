@@ -52,6 +52,15 @@ public class UsersService {
 		usersRepository.delete(id);
 	}
 	
+	public void acceptFriendRequest(User sender, User reciever) {
+		sender.acceptFriendRequest(sender, reciever);
+	}
+	
+	public Page<User> getFriendsForUser(Pageable pageable, Long reciever_id) {
+		Page<User> friends = usersRepository.findAllFriendsByUser(pageable, reciever_id);
+		return friends;
+	}
+	
 	/**
 	 * Devuelve el usuario con sesión iniciada en el sistema.
 	 * @return
