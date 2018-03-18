@@ -171,7 +171,7 @@ public class User {
 	 * @return true si son amigos o es él mismo, false si no lo son
 	 */
 	public boolean checkFriendship(User user) {
-		if (this.equals(user))
+		if (this.equals(user) )
 			return true;
 		return false;
 	}
