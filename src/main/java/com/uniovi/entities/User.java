@@ -34,20 +34,11 @@ public class User {
 
 	@OneToMany(mappedBy = "reciever", cascade = CascadeType.ALL)
 	private Set<FriendRequest> friendRequestsRecievers = new HashSet<FriendRequest>();
-	
-	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-	private Set<Friendship> friendshipsSenders = new HashSet<Friendship>();
 
-	@OneToMany(mappedBy = "reciever", cascade = CascadeType.ALL)
-	private Set<Friendship> friendshipsRecievers = new HashSet<Friendship>();
-	
-	
-	
-
-//	@ManyToMany(cascade= CascadeType.ALL)
-//	@JoinTable(name = "friendship", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), 
-//				inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
-//	private Set<User> friends = new HashSet<User>();
+	@ManyToMany(cascade= CascadeType.ALL)
+	@JoinTable(name = "friendship", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), 
+				inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
+	private Set<User> friends = new HashSet<User>();
 
 	public User(String email, String name, String lastName) {
 		super();
@@ -148,20 +139,12 @@ public class User {
 		this.friendRequestsRecievers = friendRequestsRecievers;
 	}
 
-	public Set<Friendship> getFriendshipsSenders() {
-		return friendshipsSenders;
+	public Set<User> getFriends() {
+		return friends;
 	}
 
-	public void setFriendshipsSenders(Set<Friendship> friendshipsSenders) {
-		this.friendshipsSenders = friendshipsSenders;
-	}
-
-	public Set<Friendship> getFriendshipsRecievers() {
-		return friendshipsRecievers;
-	}
-
-	public void setFriendshipsRecievers(Set<Friendship> friendshipsRecievers) {
-		this.friendshipsRecievers = friendshipsRecievers;
+	public void setFriends(Set<User> friends) {
+		this.friends = friends;
 	}
 
 	/**
@@ -171,7 +154,7 @@ public class User {
 	 * @return true si son amigos o es él mismo, false si no lo son
 	 */
 	public boolean checkFriendship(User user) {
-		if (this.equals(user))
+		if (this.equals(user) || friends.contains(user))
 			return true;
 		return false;
 	}
@@ -212,18 +195,18 @@ public class User {
 	 * @param sender
 	 * @param reciever
 	 */
-	public void acceptFriendRequest(User sender, User reciever, Friendship fs) {
-		sender.getFriendshipsSenders().add(fs);
-		reciever.getFriendshipsRecievers().add(fs);
+	public void acceptFriendRequest(User sender, User reciever) {
+		sender.getFriends().add(reciever);
+		reciever.getFriends().add(sender);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "User [email=" + email + ", name=" + name + ", lastName=" + lastName + ", friendRequestsSenders="
-				+ friendRequestsSenders + ", friendRequestsRecievers=" + friendRequestsRecievers
-				+ ", friendshipsSenders=" + friendshipsSenders + ", friendshipsRecievers=" + friendshipsRecievers + "]";
+				+ friendRequestsSenders + ", friendRequestsRecievers=" + friendRequestsRecievers + ", friends="
+				+ friends + "]";
 	}
-
+	
 	/**
 	 * Comprueba si el usuario activo le ha enviado una petición de amistad al
 	 * usuario pasado por parámetro.

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.uniovi.entities.FriendRequest;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendRequestService;
-import com.uniovi.services.FriendshipService;
 import com.uniovi.services.UsersService;
 
 @Controller
@@ -23,9 +22,6 @@ public class FriendRequestController {
 	
 	@Autowired 
 	private UsersService usersService;
-	
-	@Autowired
-	private FriendshipService friendshipService;
 	
 	@RequestMapping("/friendRequest/list")
 	public String getList(Model model, Pageable pageable){
@@ -50,7 +46,7 @@ public class FriendRequestController {
 	public String acceptFriendRequest(Model model, @PathVariable Long idFr, @PathVariable Long idSender) {
 		User reciever = usersService.getCurrentUser();
 		User sender = usersService.getUser(idSender);
-		friendshipService.acceptFriendRequest(sender, reciever);
+		usersService.acceptFriendRequest(sender, reciever);
 		friendRequestService.deleteFriendRequest(sender, reciever, idFr);
 		return "redirect:/friendRequest/list/update";
 	}
