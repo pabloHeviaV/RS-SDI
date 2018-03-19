@@ -1,6 +1,8 @@
 package com.uniovi.controllers;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,8 @@ public class FriendRequestController {
 	
 	@Autowired 
 	private UsersService usersService;
+	
+	private static final Logger LOG = LoggerFactory.getLogger(FriendRequestController.class);
 	
 	@RequestMapping("/friendRequest/list")
 	public String getList(Model model, Pageable pageable){
@@ -48,6 +52,8 @@ public class FriendRequestController {
 		User sender = usersService.getUser(idSender);
 		usersService.acceptFriendRequest(sender, reciever);
 		friendRequestService.deleteFriendRequest(sender, reciever, idFr);
+		LOG.info("Aceptada la petición de amistad del usuario: " + sender.toString()
+				+ " para el usuario: " + reciever.toString());
 		return "redirect:/friendRequest/list/update";
 	}
 

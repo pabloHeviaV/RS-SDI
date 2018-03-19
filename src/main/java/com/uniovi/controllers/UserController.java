@@ -1,8 +1,9 @@
 package com.uniovi.controllers;
 
 import java.util.LinkedList;
-import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.uniovi.entities.FriendRequest;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendRequestService;
 import com.uniovi.services.SecurityService;
@@ -37,6 +37,8 @@ public class UserController {
 
 	@Autowired
 	private FriendRequestService friendRequestService;
+	
+	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
@@ -52,6 +54,7 @@ public class UserController {
 		}
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+		LOG.info("Registrado usuario: " + user.toString());
 		return "redirect:user/list";
 	}
 
@@ -90,6 +93,8 @@ public class UserController {
 		User reciever = usersService.getUser(id);
 
 		friendRequestService.sendFriendshipRequest(sender, reciever);
+		LOG.info("Petición de amistad enviada desde el usuario: " + sender.toString()
+				+ " al usuario: " + reciever.toString());
 		return "redirect:/user/list/update";
 	}
 	
