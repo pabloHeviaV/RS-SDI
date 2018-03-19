@@ -1,5 +1,6 @@
 package com.uniovi.tests;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -176,7 +178,16 @@ public class RSTests {
 	// ya había sido enviada previamente.
 	@Test
 	public void PR5_2() {
-		// TODO
+		// Nos logueamos
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@uniovi.es", "123456");
+		// Enviamos una solicitud al usuario 5
+		PO_UserListView.sendFriendRequest(driver, 5);
+		//Comprobamos que el botón está deshabilitado
+		By boton = By.id("fRButton5"); 
+		PO_View.checkElement(driver, "id", "fRButton5");
+	    assertFalse(driver.findElement(boton).isEnabled());
+				
 	}
 
 	// 6.1 [LisInvVal] Listar las invitaciones recibidas por un usuario, realizar la
@@ -223,7 +234,7 @@ public class RSTests {
 		// Vamos a la lista de amigos
 		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'friends-menu')]/a");
 		elementos.get(0).click();
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'friendship/list')]");
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'user/listFriends')]");
 		elementos.get(0).click();
 		
 		//Comprobamos que está el usuario 2
@@ -255,7 +266,7 @@ public class RSTests {
 		// Vamos a la lista de amigos
 		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'friends-menu')]/a");
 		elementos.get(0).click();
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'friendship/list')]");
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'user/listFriends')]");
 		elementos.get(0).click();
 		
 		// Contamos que tiene 3 amigos

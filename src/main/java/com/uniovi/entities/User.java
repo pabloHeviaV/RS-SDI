@@ -153,10 +153,13 @@ public class User {
 	 * @param user
 	 * @return true si son amigos o es él mismo, false si no lo son
 	 */
-	public boolean checkFriendship(User user) {
+	public String checkFriendshipStatus(User user) {
 		if (this.equals(user) || friends.contains(user))
-			return true;
-		return false;
+			return "FRIENDS";
+		if (existsRequest(user))
+			return "REQUEST_SENT";
+					
+		return "NOT_FRIENDS";
 	}
 
 	/**

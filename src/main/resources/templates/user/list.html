@@ -31,12 +31,17 @@
 						<td th:text="${user.name}"></td>
 						<td th:text="${user.email}"></td>
 						<td>
-							<div th:if="${!activeUser.checkFriendship(user)}">
-								<button type="button" th:id="${'fRButton' + user.id}"
-									class="btn btn-info">
-									<span th:id="${'buttonText' + user.id}" th:if="${activeUser.existsRequest(user)}" th:text="#{fr.alreadySent}" th:disabled="true"></span>
-									<span th:id="${'buttonText' + user.id}" th:unless="${activeUser.existsRequest(user)}" th:text="#{fr.addFriend}" th:disabled="true"></span>
+							<div th:switch="${activeUser.checkFriendshipStatus(user)}">
+								<button th:case="'NOT_FRIENDS'" type="button" th:id="${'fRButton' + user.id}"
+									class="btn btn-info">	 
+                  				<span th:id="${'buttonText' + user.id}" th:text="#{fr.addFriend}"></span>
 								</button>
+								
+								<button th:case="'REQUEST_SENT'" disabled="true" type="button" th:id="${'fRButton' + user.id}"
+									class="btn btn-info">	
+									<span th:id="${'buttonText' + user.id}" th:text="#{fr.alreadySent}"></span>
+								</button>
+								
 								<script th:inline="javascript">
 								  /*<![CDATA[*/
 								  $( "#fRButton[[${user.id}]]" ).click(function() {
