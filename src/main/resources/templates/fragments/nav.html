@@ -12,30 +12,50 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/" th:text="#{nav.home}"></a></li>
+				
 				<li id="users-menu" class="dropdown"
-					sec:authorize="hasRole('ROLE_USUARIO')"><a
+					sec:authorize="hasRole('ROLE_USUARIO')">
+					<a
 					class="dropdown-toggle" data-toggle="dropdown" href="#" th:text="#{nav.users}">
 						<span class="caret"></span>
-				</a>
+					</a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/list" th:text="#{nav.users.list}"></a></li>
-					</ul></li>
+					</ul>
+				</li>
+				
 				<li id="fr-menu" class="dropdown"
-					sec:authorize="hasRole('ROLE_USUARIO')"><a
+					sec:authorize="hasRole('ROLE_USUARIO')">
+					<a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"  th:text="#{nav.fr}">
 					<span class="caret"></span>
-				</a>
+					</a>
 					<ul class="dropdown-menu">
 						<li><a href="/friendRequest/list" th:text="#{nav.fr.list}"></a></li>
-					</ul></li>
+					</ul>
+				</li>
+				
 				<li id="friends-menu" class="dropdown"
-					sec:authorize="hasRole('ROLE_USUARIO')"><a
+					sec:authorize="hasRole('ROLE_USUARIO')">
+					<a
 					class="dropdown-toggle" data-toggle="dropdown" href="#" th:text="#{nav.friends}">
 						 <span class="caret"></span>
-				</a>
+					</a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/listFriends" th:text="#{nav.friends.list}"></a></li>
-					</ul></li>
+					</ul>
+				</li>
+				
+				<li id="publication-menu" class="dropdown"
+					sec:authorize="hasRole('ROLE_USUARIO')">
+					<a
+					class="dropdown-toggle" data-toggle="dropdown" href="#" th:text="#{nav.publication}">
+						 <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="/publication/add" th:text="#{nav.publication.add}"></a></li>
+					</ul>
+				</li>
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">

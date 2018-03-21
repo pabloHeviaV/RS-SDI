@@ -52,8 +52,9 @@ public class FriendRequestController {
 		User sender = usersService.getUser(idSender);
 		usersService.acceptFriendRequest(sender, reciever);
 		friendRequestService.deleteFriendRequest(sender, reciever, idFr);
-		LOG.info("Aceptada la petición de amistad del usuario: " + sender.toString()
-				+ " para el usuario: " + reciever.toString());
+		LOG.info("Aceptada la petición de amistad del usuario: " + sender.getId()
+				+ " para el usuario: " + reciever.getId());
+		
 		return "redirect:/friendRequest/list/update";
 	}
 

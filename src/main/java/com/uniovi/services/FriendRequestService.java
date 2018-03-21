@@ -24,7 +24,7 @@ public class FriendRequestService {
 		FriendRequest fr = friendRequestRepository.findOne(id);
 		sender.removeFriendRequest(sender, reciever, fr);
 		friendRequestRepository.delete(id);
-		LOG.info("Petición de amistad con id" + id + " eliminada");
+		LOG.info("Petición de amistad con id " + id + " eliminada");
 		
 	}
 

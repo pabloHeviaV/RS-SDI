@@ -40,6 +40,9 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
 	private Set<User> friends = new HashSet<User>();
 
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL )
+	private Set<Publication> posts = new HashSet<Publication>();
+	
 	public User(String email, String name, String lastName) {
 		super();
 		this.email = email;

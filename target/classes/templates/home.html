@@ -8,7 +8,7 @@
 		<h3 th:text="#{home.private}"></h3>
 		<p th:text="#{home.user}">
 			<span
-				sec:authentication="principal.username" th:inline="text"> </span>
+				sec:authentication="principal.email" th:inline="text"> </span>
 		</p>
 	</div>
 	<footer th:replace="fragments/footer" />

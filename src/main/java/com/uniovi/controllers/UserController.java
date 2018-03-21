@@ -93,8 +93,8 @@ public class UserController {
 		User reciever = usersService.getUser(id);
 
 		friendRequestService.sendFriendshipRequest(sender, reciever);
-		LOG.info("Petición de amistad enviada desde el usuario: " + sender.toString()
-				+ " al usuario: " + reciever.toString());
+		LOG.info("Petición de amistad enviada desde el usuario: " + sender.getId()
+				+ " al usuario: " + reciever.getId());
 		return "redirect:/user/list/update";
 	}
 	

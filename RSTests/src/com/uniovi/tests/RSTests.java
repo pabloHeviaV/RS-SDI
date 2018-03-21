@@ -21,6 +21,7 @@ import com.uniovi.tests.pageobjects.PO_FriendRequestListView;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_Properties;
+import com.uniovi.tests.pageobjects.PO_PublicationAddView;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_UserListView;
 import com.uniovi.tests.pageobjects.PO_View;
@@ -55,9 +56,9 @@ public class RSTests {
 
 	// En Windows (Debe ser la versi�n 46.0 y desactivar las actualizacioens
 	// autom�ticas)):
-	static String PathFirefox = "C:\\Users\\yo\\Desktop\\SDI\\entorno-sdi\\entorno-sdi\\firefox\\FirefoxPortable.exe";
-	// static String PathFirefox =
-	// "C:\\Users\\Usuario\\Desktop\\Firefox46.win\\FirefoxPortable.exe";
+	static String PathFirefox = 
+			"C:\\Users\\yo\\Desktop\\SDI\\entorno-sdi\\entorno-sdi\\firefox\\FirefoxPortable.exe";
+		 // "C:\\Users\\Usuario\\Desktop\\Firefox46.win\\FirefoxPortable.exe";
 	static WebDriver driver = getDriver(PathFirefox);
 	static String URL = "http://localhost:8090";
 
@@ -272,5 +273,26 @@ public class RSTests {
 		// Contamos que tiene 3 amigos
 		List<WebElement> filas = PO_View.checkElement(driver, "free", "//tbody/tr");
 		assertTrue(filas.size() == 3);
+	}
+	
+	//9.1 [PubVal] Crear una publicación con datos válidos.
+	@Test
+	public void PR9_1() {
+		// Nos logueamos con el usuario 1
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@uniovi.es", "123456");
+		
+		// Vamos a la vista de crear publicación
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'publication-menu')]/a");
+		elementos.get(0).click();
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/publication/add')]");
+		elementos.get(0).click();
+		
+		// Comprobamos que estamos en la página correcta
+		PO_View.checkElement(driver, "text", "Crea una nueva publicación");
+		
+		// Creamos una publicación 
+		PO_PublicationAddView.createPublication(driver, "Título de la publicación", "Cuerpo de prueba");
+		
 	}
 }
