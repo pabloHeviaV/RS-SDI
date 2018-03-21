@@ -1,0 +1,23 @@
+Caso 9: Usuario registrado: crear una nueva publicación
+Para esto ha sido necesario crear la entidad "Publication", que tendrá un id, 
+un título, un cuerpo, una fecha de publicación y un usuario creador.
+Esta entidad estará mapeada con una relación uno a muchos a la entidad usuario,
+que se resolverá colocando la etiqueta "@ManyToOne" en el usuario creadro de Publication
+y la etiqueta "@OneToMany" en la lista de Publication que se añadirá a la entidad User.
+
+Se ha de crear una nueva vista, en nuestro caso ha sido la vista "add" bajo la carpeta "publication".
+En ella tendremos un formulario con dos campos, uno para el título y otro para el cuerpo de la publicación.
+Al pulsar el botón de enviar se mandarán los datos por POST y los recogerá el nuevo PublicationController.
+En PublicationController se han creado dos métodos que están mapeados para la url "/publication/add". 
+El GET crea un objeto Publication con el constructor sin parámetros y lo añade al modelo.
+El POST recoge el resultado del formulario y llama al método "addPublication" que se ha de crear en 
+Publication Service al que le pasa el objeto Publication rellenado por el formulario y el usuario que está
+en sesión. En este método se le asigna el el usuario pasado por parámetro como dueño a la publicación y
+se llama al método "save" del recién creado "PublicationRepository" para persistir el objeto. 
+
+Para probar este caso de uso se ha realizado una prueba en la que se crea una nueva publicación.
+Para ello se siguen los siguientes pasos:
+	- Se hace login con el usuario 1.
+	- Se accede a la vista de crear publicaciones.
+	- Se comprueba que se ha cargado.
+	- Se crea una publicación con el método "createPublication" creado en la clase "PO_PublicationAddView".
