@@ -37,7 +37,7 @@ public class UserController {
 
 	@Autowired
 	private FriendRequestService friendRequestService;
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -93,21 +93,19 @@ public class UserController {
 		User reciever = usersService.getUser(id);
 
 		friendRequestService.sendFriendshipRequest(sender, reciever);
-		LOG.info("Petición de amistad enviada desde el usuario: " + sender.getId()
-				+ " al usuario: " + reciever.getId());
+		LOG.info(
+				"Petición de amistad enviada desde el usuario: " + sender.getId() + " al usuario: " + reciever.getId());
 		return "redirect:/user/list/update";
 	}
-	
-	
+
 	@RequestMapping("/user/listFriends")
-	public String getList(Model model, Pageable pageable){
+	public String getList(Model model, Pageable pageable) {
 		User user = usersService.getCurrentUser();
 		Page<User> userFriends = usersService.getFriendsForUser(pageable, user.getId());
 		model.addAttribute("usersListFriend", userFriends.getContent());
 		model.addAttribute("page", userFriends);
 		return "user/listFriends";
 	}
-	
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {

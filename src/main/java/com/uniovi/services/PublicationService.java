@@ -1,5 +1,7 @@
 package com.uniovi.services;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +23,9 @@ public class PublicationService {
 		publication.setOwner(owner);
 		publicationRepository.save(publication);
 		LOG.info("Publicación con id " + publication.getId().toString() + " ha sido creada.");
+	}
+
+	public List<Publication> getPublicationsForUser(long id) {
+		return publicationRepository.findAllPublicationsByUser(id);
 	}
 }

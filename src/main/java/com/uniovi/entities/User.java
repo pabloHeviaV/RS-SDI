@@ -35,14 +35,13 @@ public class User {
 	@OneToMany(mappedBy = "reciever", cascade = CascadeType.ALL)
 	private Set<FriendRequest> friendRequestsRecievers = new HashSet<FriendRequest>();
 
-	@ManyToMany(cascade= CascadeType.ALL)
-	@JoinTable(name = "friendship", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), 
-				inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "friendship", joinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "reciever_id", referencedColumnName = "id"))
 	private Set<User> friends = new HashSet<User>();
 
-	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL )
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	private Set<Publication> posts = new HashSet<Publication>();
-	
+
 	public User(String email, String name, String lastName) {
 		super();
 		this.email = email;
@@ -161,13 +160,14 @@ public class User {
 			return "FRIENDS";
 		if (existsRequest(user))
 			return "REQUEST_SENT";
-					
+
 		return "NOT_FRIENDS";
 	}
 
 	/**
-	 * Añade una peticion de amistad a la lista de peticiones enviadas del
-	 * usuario que la envia y a la lista de peticiones recibidas del usuario que recibe la peticion.
+	 * Añade una peticion de amistad a la lista de peticiones enviadas del usuario
+	 * que la envia y a la lista de peticiones recibidas del usuario que recibe la
+	 * peticion.
 	 * 
 	 * @param sender
 	 * @param reciever
@@ -177,26 +177,26 @@ public class User {
 		sender.getFriendRequestsSenders().add(fr);
 		reciever.getFriendRequestsRecievers().add(fr);
 	}
-	
+
 	/**
-	 * Elimina una peticion de amistad de la lista de peticiones enviadas del 
-	 * usuario que la envia y de la lista de peticiones recibidas del usuario que la recibe.
+	 * Elimina una peticion de amistad de la lista de peticiones enviadas del
+	 * usuario que la envia y de la lista de peticiones recibidas del usuario que la
+	 * recibe.
 	 * 
 	 * @param sender
 	 * @param reciever
 	 * @param fr
 	 */
-	public void removeFriendRequest(User sender, User reciever,FriendRequest fr) {
+	public void removeFriendRequest(User sender, User reciever, FriendRequest fr) {
 		sender.getFriendRequestsSenders().remove(fr);
 		reciever.getFriendRequestsRecievers().remove(fr);
 		fr.setSender(null);
 		fr.setReciever(null);
 	}
-	
+
 	/**
-	 * Creamos una relación de amistad entre el usuario que envió
-	 * la solicitud de amistad y el que la recibió añadiendoles a sus respectivas
-	 * listas de amigos.
+	 * Creamos una relación de amistad entre el usuario que envió la solicitud de
+	 * amistad y el que la recibió añadiendoles a sus respectivas listas de amigos.
 	 * 
 	 * @param sender
 	 * @param reciever
@@ -212,7 +212,7 @@ public class User {
 				+ friendRequestsSenders + ", friendRequestsRecievers=" + friendRequestsRecievers + ", friends="
 				+ friends + "]";
 	}
-	
+
 	/**
 	 * Comprueba si el usuario activo le ha enviado una petición de amistad al
 	 * usuario pasado por parámetro.
@@ -221,10 +221,18 @@ public class User {
 	 * @return
 	 */
 	public boolean existsRequest(User reciever) {
-		for(FriendRequest fr: getFriendRequestsSenders())
-			if(fr.getReciever().equals(reciever))
+		for (FriendRequest fr : getFriendRequestsSenders())
+			if (fr.getReciever().equals(reciever))
 				return true;
 		return false;
-}
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 }

@@ -16,19 +16,19 @@ public class Publication {
 	private String title;
 	private String body;
 	private Date creationDate;
-	
+
 	@ManyToOne
 	private User owner;
-	
-	public Publication(){
-		this.creationDate= new Date();
+
+	public Publication() {
+		this.creationDate = new Date();
 	}
 
 	public Publication(String title, String body) {
 		super();
 		this.title = title;
 		this.body = body;
-		this.creationDate= new Date();
+		this.creationDate = new Date();
 	}
 
 	public String getTitle() {
@@ -62,6 +62,5 @@ public class Publication {
 	public Long getId() {
 		return id;
 	}
-	
-	
+
 }
